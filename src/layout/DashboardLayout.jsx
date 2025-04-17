@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
+import { useTheme } from "../context/ThemeContext";
 
 const DashboardLayout = ({ children }) => {
+  const { isDarkMode } = useTheme();
+
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
 
   const toggleMobileSidebar = () => {
@@ -46,7 +49,11 @@ const DashboardLayout = ({ children }) => {
         <TopBar toggleSidebar={toggleMobileSidebar} />
 
         {/* Main Content */}
-        <main className="flex-1 relative overflow-y-auto focus:outline-none bg-gray-50 p-6">
+        <main
+          className={`flex-1 relative overflow-y-auto focus:outline-none bg-gray-50 p-6 ${
+            isDarkMode ? "dark:bg-gray-900 scrollbar-dark" : "scrollbar-light"
+          }`}
+        >
           {children}
         </main>
       </div>

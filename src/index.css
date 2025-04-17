@@ -13,3 +13,47 @@ body {
 .label {
   @apply block mb-1 font-medium text-gray-700 dark:text-gray-300;
 }
+
+@layer utilities {
+  /* Scrollbar for light mode */
+  .scrollbar-light {
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db #f9fafb; /* thumb and track */
+  }
+
+  .scrollbar-light::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-light::-webkit-scrollbar-track {
+    background: #f9fafb;
+  }
+
+  .scrollbar-light::-webkit-scrollbar-thumb {
+    background-color: #d1d5db;
+    border-radius: 9999px;
+    border: 2px solid #f9fafb;
+  }
+
+  /* Scrollbar for dark mode */
+  .scrollbar-dark {
+    scrollbar-width: thin;
+    scrollbar-color: #4b5563 #1f2937; /* thumb and track */
+  }
+
+  .scrollbar-dark::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-dark::-webkit-scrollbar-track {
+    background: #1f2937;
+  }
+
+  .scrollbar-dark::-webkit-scrollbar-thumb {
+    background-color: #4b5563;
+    border-radius: 9999px;
+    border: 2px solid #1f2937;
+  }
+}

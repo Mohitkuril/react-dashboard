@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTheme } from "../context/ThemeContext";
 import {
   moveTask,
   createCircularDependency,
@@ -43,29 +44,49 @@ const detectCircularDependencies = (
 
 // Task card with drag and drop support
 const TaskCard = ({ task, onDragStart, dependencyMap, showDependencies }) => {
+  const { isDarkMode } = useTheme();
   const [showDetails, setShowDetails] = useState(false);
   const circularCheck = detectCircularDependencies(task.id, dependencyMap);
   const hasCircularDependency = circularCheck.detected;
   const dependencies = dependencyMap[task.id] || [];
 
   const getPriorityColor = (priority) => {
-    switch (priority) {
-      case "high":
-        return "bg-red-100 text-red-800";
-      case "medium":
-        return "bg-yellow-100 text-yellow-800";
-      case "low":
-        return "bg-blue-100 text-blue-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
+    const colorMap = {
+      high: {
+        light: "bg-red-100 text-red-800",
+        dark: "bg-red-900 text-red-100",
+      },
+      medium: {
+        light: "bg-yellow-100 text-yellow-800",
+        dark: "bg-yellow-900 text-yellow-100",
+      },
+      low: {
+        light: "bg-blue-100 text-blue-800",
+        dark: "bg-blue-900 text-blue-100",
+      },
+      default: {
+        light: "bg-gray-100 text-gray-800",
+        dark: "bg-gray-700 text-gray-100",
+      },
+    };
+
+    const colorSet = colorMap[priority] || colorMap.default;
+    return isDarkMode ? colorSet.dark : colorSet.light;
   };
 
   return (
     <div
-      className={`bg-white p-4 rounded-md border ${
-        hasCircularDependency ? "border-red-500" : "border-gray-200"
-      } shadow-sm mb-3 cursor-move`}
+      className={`p-4 rounded-md shadow-sm mb-3 cursor-move ${
+        isDarkMode ? "bg-gray-800" : "bg-white"
+      } ${
+        hasCircularDependency
+          ? isDarkMode
+            ? "border border-red-600"
+            : "border border-red-500"
+          : isDarkMode
+          ? "border border-gray-700"
+          : "border border-gray-200"
+      }`}
       draggable="true"
       onDragStart={(e) => onDragStart(e, task)}
       onClick={() => setShowDetails(!showDetails)}
@@ -79,29 +100,55 @@ const TaskCard = ({ task, onDragStart, dependencyMap, showDependencies }) => {
           {task.priority}
         </span>
         {hasCircularDependency && (
-          <span className="px-2 py-1 text-xs bg-red-100 text-red-800 rounded-full">
+          <span
+            className={`px-2 py-1 text-xs rounded-full ${
+              isDarkMode ? "bg-red-900 text-red-100" : "bg-red-100 text-red-800"
+            }`}
+          >
             Circular Dependency
           </span>
         )}
       </div>
 
-      <h5 className="font-medium mt-2 text-gray-800">{task.title}</h5>
+      <h5
+        className={`font-medium mt-2 ${
+          isDarkMode ? "text-gray-200" : "text-gray-800"
+        }`}
+      >
+        {task.title}
+      </h5>
 
       {showDetails && (
         <>
-          <p className="text-sm text-gray-500 mt-1">{task.description}</p>
+          <p
+            className={`text-sm mt-1 ${
+              isDarkMode ? "text-gray-400" : "text-gray-500"
+            }`}
+          >
+            {task.description}
+          </p>
 
           {showDependencies && dependencies.length > 0 && (
             <div className="mt-3">
-              <h6 className="text-xs font-semibold text-gray-500">
+              <h6
+                className={`text-xs font-semibold ${
+                  isDarkMode ? "text-gray-400" : "text-gray-500"
+                }`}
+              >
                 Dependencies:
               </h6>
               <div className="flex flex-wrap gap-1 mt-1">
                 {dependencies.map((depId) => (
                   <span
                     key={depId}
-                    className={`px-2 py-1 text-xs bg-gray-200 rounded-full ${
-                      hasCircularDependency ? "border border-red-500" : ""
+                    className={`px-2 py-1 text-xs rounded-full ${
+                      isDarkMode ? "bg-gray-700" : "bg-gray-200"
+                    } ${
+                      hasCircularDependency
+                        ? isDarkMode
+                          ? "border border-red-600"
+                          : "border border-red-500"
+                        : ""
                     }`}
                   >
                     Task #{depId}
@@ -115,14 +162,22 @@ const TaskCard = ({ task, onDragStart, dependencyMap, showDependencies }) => {
             <div className="flex items-center">
               <img
                 className="h-6 w-6 rounded-full"
-                src={task.assignee?.avatar || "https://via.placeholder.com/24"}
+                src={task.assignee?.avatar || "/api/placeholder/24/24"}
                 alt={task.assignee?.name || "Unassigned"}
               />
-              <span className="text-xs text-gray-500 ml-1">
+              <span
+                className={`text-xs ml-1 ${
+                  isDarkMode ? "text-gray-400" : "text-gray-500"
+                }`}
+              >
                 {task.assignee?.name || "Unassigned"}
               </span>
             </div>
-            <span className="text-xs text-gray-400">
+            <span
+              className={`text-xs ${
+                isDarkMode ? "text-gray-500" : "text-gray-400"
+              }`}
+            >
               {task.dueDate || "No date"}
             </span>
           </div>
@@ -142,18 +197,28 @@ const TaskColumn = ({
   dependencyMap,
   showDependencies,
 }) => {
+  const { isDarkMode } = useTheme();
+
   return (
     <div
-      className="bg-gray-50 p-3 rounded-lg min-w-[280px] h-full"
+      className={`p-3 rounded-lg min-w-[280px] h-full ${
+        isDarkMode ? "bg-gray-900" : "bg-gray-50"
+      }`}
       onDrop={(e) => onDrop(e, column.id)}
       onDragOver={onDragOver}
     >
-      <h4 className="text-sm font-medium text-gray-700 mb-3 flex justify-between items-center">
-        <span>{column.title}</span>
+      <h4 className="text-sm font-medium mb-3 flex justify-between items-center">
+        <span className={isDarkMode ? "text-gray-300" : "text-gray-700"}>
+          {column.title}
+        </span>
         <span
           className={`text-xs px-2 py-1 rounded-full ${
             column.id === "done"
-              ? "bg-green-100 text-green-700"
+              ? isDarkMode
+                ? "bg-green-900 text-green-100"
+                : "bg-green-100 text-green-700"
+              : isDarkMode
+              ? "bg-gray-700 text-gray-300"
               : "bg-gray-200 text-gray-700"
           }`}
         >
@@ -177,6 +242,7 @@ const TaskColumn = ({
 };
 
 const DraggableTaskBoard = () => {
+  const { isDarkMode } = useTheme();
   const dispatch = useDispatch();
   const {
     columns,
@@ -202,13 +268,25 @@ const DraggableTaskBoard = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow">
-      <div className="p-5 border-b border-gray-200">
+    <div
+      className={`rounded-lg shadow ${isDarkMode ? "bg-gray-800" : "bg-white"}`}
+    >
+      <div
+        className={`p-5 ${
+          isDarkMode ? "border-b border-gray-700" : "border-b border-gray-200"
+        }`}
+      >
         <div className="flex justify-between items-center">
-          <h3 className="text-lg font-medium text-gray-700">Task Board</h3>
+          <h3
+            className={`text-lg font-medium ${
+              isDarkMode ? "text-gray-200" : "text-gray-700"
+            }`}
+          >
+            Task Board
+          </h3>
           <button
             onClick={() => setShowDependencies(!showDependencies)}
-            className="text-sm text-blue-500"
+            className="text-sm text-blue-500 hover:text-blue-600"
           >
             Toggle Dependencies
           </button>
