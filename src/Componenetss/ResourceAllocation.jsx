@@ -1,13 +1,59 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateResourcePercentages } from "../store/resourceSlice";
 import { useTheme } from "../context/ThemeContext";
 
 function ResourceAllocation() {
   const { isDarkMode } = useTheme();
   const dispatch = useDispatch();
-  const resources = useSelector((state) => state.resource.resources);
-
+  const [resources, setResources] = useState([
+    {
+      id: 1,
+      name: "Emily Johnson",
+      role: "UX Designer",
+      avatar: "/avatars/emily.jpg",
+      assignedPercentage: 34,
+      capacityPercentage: 55,
+    },
+    {
+      id: 2,
+      name: "David Wilson",
+      role: "Frontend Dev",
+      avatar: "/avatars/david.jpg",
+      assignedPercentage: 89,
+      capacityPercentage: 95,
+    },
+    {
+      id: 3,
+      name: "Michael Brown",
+      role: "Backend Dev",
+      avatar: "/avatars/michael.jpg",
+      assignedPercentage: 45,
+      capacityPercentage: 60,
+    },
+    {
+      id: 4,
+      name: "Sarah Davis",
+      role: "Project Manager",
+      avatar: "/avatars/sarah.jpg",
+      assignedPercentage: 30,
+      capacityPercentage: 75,
+    },
+  ]);
+  const updateResourcePercentages = () => {
+    setResources((prev) =>
+      prev.map((r) => ({
+        ...r,
+        assignedPercentage: Math.min(
+          100,
+          Math.max(10, r.assignedPercentage + (Math.random() * 10 - 5))
+        ),
+        capacityPercentage: Math.min(
+          100,
+          Math.max(50, r.capacityPercentage + (Math.random() * 5 - 2))
+        ),
+      }))
+    );
+  };
   useEffect(() => {
     const interval = setInterval(() => {
       dispatch(updateResourcePercentages());

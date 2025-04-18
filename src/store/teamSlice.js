@@ -2,6 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  teamName: "",
   teamMembers: [], // Store the team members' data
 };
 
@@ -15,8 +16,11 @@ const teamSlice = createSlice({
     setTeamMembers: (state, action) => {
       state.teamMembers = action.payload;
     },
+    setTeamName: (state, action) => {
+      state.teamName = action.payload;
+    },
   },
 });
 
-export const { addTeamMember, setTeamMembers } = teamSlice.actions;
+export const { addTeamMember, setTeamMembers, setTeamName } = teamSlice.actions;
 export default teamSlice.reducer;

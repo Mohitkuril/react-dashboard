@@ -36,14 +36,14 @@ const BurndownChart = () => {
         ];
       case "30days":
       default:
-        return (
-          burndown || [
-            { date: "Day 1", ideal: 30, actual: 30 },
-            { date: "Day 10", ideal: 20, actual: 25 },
-            { date: "Day 20", ideal: 10, actual: 18 },
-            { date: "Day 30", ideal: 0, actual: 8 },
-          ]
-        ); // fallback to Redux state or provide default
+        return burndown && burndown.length > 0
+          ? burndown
+          : [
+              { date: "Day 1", ideal: 30, actual: 30 },
+              { date: "Day 10", ideal: 20, actual: 25 },
+              { date: "Day 20", ideal: 10, actual: 18 },
+              { date: "Day 30", ideal: 0, actual: 8 },
+            ];
     }
   }, [timeframe, burndown]);
 

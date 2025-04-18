@@ -3,7 +3,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import teamReducer from "./teamSlice";
 import taskReducer from "./taskSlice"; // Import the task slice
 import dashboardReducer from "./dashboardSlice";
-import resourceReducer from "./resourceSlice";
 import taskBoardReducer from "./taskBoardSlice";
 
 const store = configureStore({
@@ -11,7 +10,6 @@ const store = configureStore({
     team: teamReducer,
     tasks: taskReducer,
     dashboard: dashboardReducer,
-    resource: resourceReducer,
     taskBoard: taskBoardReducer,
   },
 });

@@ -4,7 +4,7 @@ import { useTheme } from "../context/ThemeContext";
 import { useProject } from "../context/ProjectContext";
 import TaskBoard from "./TaskBoard";
 import TaskForm from "./TaskForm";
-import StatusCards from "../components/StatusCards";
+import StatusCards from "./StatusCards";
 import BurndownChart from "./BurndownChart";
 import ResourceAllocation from "./ResourceAllocation";
 import DraggableTaskBoard from "./DraggableTaskBoard";
@@ -17,7 +17,6 @@ const Dashboard = () => {
 
   return (
     <div className="space-y-8">
-      {/* Section with id="dashboard" for scrolling */}
       <div id="dashboard">
         <StatusCards />
       </div>
@@ -29,22 +28,13 @@ const Dashboard = () => {
         <DraggableTaskBoard />
       </div>
 
-      {/* Section with id="tasks" for scrolling */}
-      {/* <div id="tasks">
-        <TaskBoard tasks={tasks} />
-      </div> */}
-
-      {/* Section with id="timeline" for scrolling */}
       <div id="timeline">
         <GanttChart />
       </div>
 
-      {/* Section with id="availability" for scrolling */}
       <div id="availability">
         <AvailabilityCalendar team={team} />
       </div>
-
-      {/* Other sections like BurndownChart, ResourceAllocation, etc. */}
     </div>
   );
 };

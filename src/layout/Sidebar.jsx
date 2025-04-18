@@ -1,20 +1,40 @@
 // src/components/Sidebar.jsx
-import { useState } from "react";
-import { useProject } from "../context/ProjectContext";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useTheme } from "../context/ThemeContext";
+import { useProject } from "../context/ProjectContext";
 
 const Sidebar = () => {
-  const { navigation, team } = useProject();
+  const { navigation } = useProject(); // Still using context for navigation
   const { isDarkMode } = useTheme();
+
   const [activeItem, setActiveItem] = useState("dashboard");
+
+  // 🔥 Get teamName from Redux
+  const reduxTeamName = useSelector((state) => state.team.teamName);
+
+  // 💾 Store final team name here
+  const [teamName, setTeamName] = useState("");
+
+  // 🧠 Check Redux first, then sessionStorage
+  useEffect(() => {
+    if (reduxTeamName) {
+      setTeamName(reduxTeamName);
+    } else {
+      const storedName = sessionStorage.getItem("teamName");
+      if (storedName) {
+        setTeamName(storedName);
+      }
+    }
+  }, [reduxTeamName]);
 
   const handleNavClick = (id) => {
     setActiveItem(id);
-    const element = document.getElementById(id); // Scroll to the corresponding component
+    const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({
-        behavior: "smooth", // Smooth scrolling
-        block: "start", // Align to the top of the screen
+        behavior: "smooth",
+        block: "start",
       });
     }
   };
@@ -29,18 +49,7 @@ const Sidebar = () => {
               : "bg-white text-gray-800 border-gray-200"
           }`}
         >
-          <div className="flex items-center p-4">
-            <div
-              className={`flex-shrink-0 flex items-center ${
-                isDarkMode ? "text-blue-400" : "text-blue-600"
-              }`}
-            >
-              <svg className="h-8 w-8" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-              </svg>
-              <span className="ml-2 text-lg font-semibold">Dashboard</span>
-            </div>
-          </div>
+          {/* Navigation Links */}
           <div className="flex-1 flex flex-col overflow-y-auto">
             <nav className="flex-1 px-2 py-4 space-y-1">
               {navigation.map((item) => (
@@ -73,27 +82,20 @@ const Sidebar = () => {
                 </a>
               ))}
             </nav>
-            {/* Team members section */}
-            <div className="px-3 mt-6">
-              <h2 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-                Team
-              </h2>
-              <div className="flex flex-col space-y-2">
-                {team.map((member, index) => (
-                  <a
-                    key={index}
-                    href="#"
-                    className="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100"
-                  >
-                    <span className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-300 mr-2">
-                      {member.initials || member.name[0]}
-                    </span>
-                    <span>{member.name}</span>
-                  </a>
-                ))}
-              </div>
-            </div>
           </div>
+
+          {/* Team Name at the bottom */}
+          {teamName && (
+            <div
+              className={`px-4 py-4 text-sm font-medium  ${
+                isDarkMode
+                  ? "bg-gray-800 text-gray-300 opacity-80"
+                  : "bg-gray-200 text-gray-600 opacity-80"
+              }`}
+            >
+              <span>Team: {teamName}</span>
+            </div>
+          )}
         </div>
       </div>
     </div>

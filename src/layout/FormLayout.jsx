@@ -1,5 +1,5 @@
-// src/layout/FormLayout.jsx
 import React from "react";
+import { useTheme } from "../context/ThemeContext"; // Import useTheme to fetch isDarkMode
 
 export default function FormLayout({
   title,
@@ -8,22 +8,22 @@ export default function FormLayout({
   buttonLabel,
   onSubmit,
 }) {
+  const { isDarkMode } = useTheme(); // Fetch isDarkMode from context
+
   return (
-    <div className="w-[90%] md:w-[40vw] mx-auto mt-6 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
-        {title}
-      </h2>
-      {subtitle && (
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-          {subtitle}
-        </p>
-      )}
+    <div
+      className={` mx-auto mt-6 p-6 rounded-lg shadow-md ${
+        isDarkMode ? "bg-gray-800 text-white" : "bg-white text-gray-900"
+      }`}
+    >
+      <h2 className="text-xl font-semibold mb-4">{title}</h2>
+      {subtitle && <p className="text-sm mb-4">{subtitle}</p>}
       <form onSubmit={onSubmit} className="space-y-6">
         {formFields.map((field, index) => (
           <div key={index} className="space-y-2">
             <label
               htmlFor={field.id}
-              className="text-gray-700 dark:text-gray-200"
+              className={`${isDarkMode ? "text-gray-300" : "text-gray-800"}`}
             >
               {field.label}
             </label>
@@ -33,7 +33,11 @@ export default function FormLayout({
                 name={field.id}
                 value={field.value}
                 onChange={field.onChange}
-                className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white"
+                className={`w-full p-2 rounded ${
+                  isDarkMode
+                    ? "bg-gray-700 text-gray-200"
+                    : "bg-gray-100 text-gray-800"
+                }`}
               >
                 <option value="" disabled>
                   Select a team member
@@ -52,7 +56,11 @@ export default function FormLayout({
                 placeholder={field.placeholder}
                 value={field.value}
                 onChange={field.onChange}
-                className="w-full p-2 rounded bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white"
+                className={`w-full p-2 rounded ${
+                  isDarkMode
+                    ? "bg-gray-700 text-gray-200"
+                    : "bg-gray-100 text-gray-800"
+                }`}
                 required={field.required}
               />
             )}
@@ -60,7 +68,11 @@ export default function FormLayout({
         ))}
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+          className={`px-4 py-2 w-full rounded transition-colors ${
+            isDarkMode
+              ? "bg-blue-700 hover:bg-blue-800"
+              : "bg-blue-600 hover:bg-blue-700"
+          } text-white`}
         >
           {buttonLabel}
         </button>

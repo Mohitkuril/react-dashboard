@@ -1,4 +1,4 @@
-// src/store/dashboardSlice.js
+// src/store/teamMembersSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
 
@@ -88,87 +88,62 @@ const dummyData = {
   ],
 };
 
-// Initial state with dashboard data and form data in one slice
 const initialState = {
-  // Dashboard data
-  resources: [],
-  tasks: [],
-  burndown: [],
-  completedTasks: { done: 0, total: 0 },
-  hoursSpent: { total: 0, thisWeek: 0 },
-  budget: { spent: 0, total: 0 },
-
-  // Form data (for TeamMembersForm)
-  formMembers: [{ ...defaultMember }],
-  formBurndown: dummyData.burndown,
+  members: [{ ...defaultMember }],
+  burndown: dummyData.burndown,
   isFormSubmitted: false,
 };
 
-const dashboardSlice = createSlice({
-  name: "dashboard",
+const teamMembersSlice = createSlice({
+  name: "teamMembers",
   initialState,
   reducers: {
-    // Existing dashboard reducers
-    setResources: (state, action) => {
-      state.resources = action.payload;
+    setMembers: (state, action) => {
+      state.members = action.payload;
     },
-    setTasks: (state, action) => {
-      state.tasks = action.payload;
+    addMember: (state) => {
+      state.members.push({ ...defaultMember });
     },
-    setDashboardStats: (state, action) => {
-      state.burndown = action.payload.burndown;
-      state.completedTasks = action.payload.completedTasks;
-      state.hoursSpent = action.payload.hoursSpent;
-      state.budget = action.payload.budget;
-    },
-
-    // Form reducers
-    setFormMembers: (state, action) => {
-      state.formMembers = action.payload;
-    },
-    addFormMember: (state) => {
-      state.formMembers.push({ ...defaultMember });
-    },
-    updateFormMember: (state, action) => {
+    updateMember: (state, action) => {
       const { index, field, value } = action.payload;
-      state.formMembers[index][field] = value;
+      state.members[index][field] = value;
     },
-    removeFormMember: (state, action) => {
-      state.formMembers.splice(action.payload, 1);
+    removeMember: (state, action) => {
+      state.members.splice(action.payload, 1);
     },
-    addFormTask: (state, action) => {
+    addTask: (state, action) => {
       const memberIndex = action.payload;
-      state.formMembers[memberIndex].tasks.push({
+      state.members[memberIndex].tasks.push({
         title: "",
         description: "",
         priority: "medium",
         dueDate: "",
       });
     },
-    updateFormTask: (state, action) => {
+    updateTask: (state, action) => {
       const { memberIndex, taskIndex, field, value } = action.payload;
-      state.formMembers[memberIndex].tasks[taskIndex][field] = value;
+      state.members[memberIndex].tasks[taskIndex][field] = value;
     },
-    removeFormTask: (state, action) => {
+    removeTask: (state, action) => {
       const { memberIndex, taskIndex } = action.payload;
-      state.formMembers[memberIndex].tasks.splice(taskIndex, 1);
+      state.members[memberIndex].tasks.splice(taskIndex, 1);
     },
-    setFormBurndown: (state, action) => {
-      state.formBurndown = action.payload;
+    setBurndown: (state, action) => {
+      state.burndown = action.payload;
     },
-    addFormBurndownEntry: (state) => {
-      const newDay = state.formBurndown.length + 1;
-      state.formBurndown.push({ date: `Day ${newDay}`, ideal: 0, actual: 0 });
+    addBurndownEntry: (state) => {
+      const newDay = state.burndown.length + 1;
+      state.burndown.push({ date: `Day ${newDay}`, ideal: 0, actual: 0 });
     },
-    updateFormBurndownEntry: (state, action) => {
+    updateBurndownEntry: (state, action) => {
       const { index, field, value } = action.payload;
-      state.formBurndown[index][field] = value;
+      state.burndown[index][field] = value;
     },
-    removeFormBurndownEntry: (state, action) => {
-      state.formBurndown.splice(action.payload, 1);
+    removeBurndownEntry: (state, action) => {
+      state.burndown.splice(action.payload, 1);
     },
-    resetFormToDefault: (state) => {
-      state.formMembers = dummyData.resources.map((resource) => ({
+    resetToDefault: (state) => {
+      state.members = dummyData.resources.map((resource) => ({
         name: resource.name,
         role: resource.role,
         assignedPercentage: resource.assignedPercentage,
@@ -182,7 +157,7 @@ const dashboardSlice = createSlice({
             dueDate: task.dueDate,
           })),
       }));
-      state.formBurndown = dummyData.burndown;
+      state.burndown = dummyData.burndown;
     },
     setFormSubmitted: (state, action) => {
       state.isFormSubmitted = action.payload;
@@ -191,25 +166,19 @@ const dashboardSlice = createSlice({
 });
 
 export const {
-  // Existing dashboard actions
-  setResources,
-  setTasks,
-  setDashboardStats,
-
-  // Form actions
-  setFormMembers,
-  addFormMember,
-  updateFormMember,
-  removeFormMember,
-  addFormTask,
-  updateFormTask,
-  removeFormTask,
-  setFormBurndown,
-  addFormBurndownEntry,
-  updateFormBurndownEntry,
-  removeFormBurndownEntry,
-  resetFormToDefault,
+  setMembers,
+  addMember,
+  updateMember,
+  removeMember,
+  addTask,
+  updateTask,
+  removeTask,
+  setBurndown,
+  addBurndownEntry,
+  updateBurndownEntry,
+  removeBurndownEntry,
+  resetToDefault,
   setFormSubmitted,
-} = dashboardSlice.actions;
+} = teamMembersSlice.actions;
 
-export default dashboardSlice.reducer;
+export default teamMembersSlice.reducer;
