@@ -18,6 +18,7 @@ import {
   removeFormBurndownEntry,
   resetFormToDefault,
   setFormSubmitted,
+  setTeamSize,
 } from "../store/dashboardSlice";
 
 export default function TeamMembersForm() {
@@ -82,17 +83,15 @@ export default function TeamMembersForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Create resources data from members
     const resources = members.map((m, i) => ({
       id: i + 1,
       name: m.name,
       role: m.role,
-      avatar: "/avatars/default.png", // Could be improved with actual avatar selection
+      avatar: "/avatars/default.png",
       assignedPercentage: m.assignedPercentage,
       capacityPercentage: m.capacityPercentage,
     }));
 
-    // Create tasks list from all member tasks
     const tasks = members.flatMap((m) =>
       m.tasks.map((t) => ({
         id: nanoid(),
@@ -105,12 +104,13 @@ export default function TeamMembersForm() {
       }))
     );
 
-    // If there's no data entered, use dummy data
     const finalResources =
       resources.length > 0 && resources[0].name ? resources : [];
     const finalTasks = tasks.length > 0 && tasks[0].title ? tasks : [];
 
-    // Update Redux state for dashboard
+    // ✅ Save team size
+    dispatch(setTeamSize(finalResources.length));
+
     dispatch(setResources(finalResources));
     dispatch(
       setDashboardStats({
@@ -121,10 +121,7 @@ export default function TeamMembersForm() {
       })
     );
 
-    // Mark the form as submitted
     dispatch(setFormSubmitted(true));
-
-    // Navigate to dashboard
     navigate("/dashboard");
   };
 

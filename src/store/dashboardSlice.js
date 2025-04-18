@@ -91,6 +91,7 @@ const dummyData = {
 // Initial state with dashboard data and form data in one slice
 const initialState = {
   // Dashboard data
+  teamSize: 0,
   resources: [],
   tasks: [],
   burndown: [],
@@ -108,6 +109,9 @@ const dashboardSlice = createSlice({
   name: "dashboard",
   initialState,
   reducers: {
+    setTeamSize: (state, action) => {
+      state.teamSize = action.payload;
+    },
     // Existing dashboard reducers
     setResources: (state, action) => {
       state.resources = action.payload;
@@ -210,6 +214,7 @@ export const {
   removeFormBurndownEntry,
   resetFormToDefault,
   setFormSubmitted,
+  setTeamSize,
 } = dashboardSlice.actions;
 
 export default dashboardSlice.reducer;

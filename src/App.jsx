@@ -57,9 +57,7 @@ function App() {
                   }
                 >
                   <Route index element={<CreateTeamForm />} />
-                  
                   <Route path="team-members" element={<TeamMembersForm />} />
-                  <Route path="assign-tasks" element={<TaskAssignmentForm />} />
                 </Route>
                 <Route
                   path="/dashboard"

@@ -1,67 +1,74 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTheme } from "../context/ThemeContext";
+import { setResources } from "../store/dashboardSlice"; // import action if needed
+
+const dummyResources = [
+  {
+    id: 1,
+    name: "Emily Johnson",
+    role: "UX Designer",
+    avatar: "https://i.pravatar.cc/300?img=20",
+    assignedPercentage: 34,
+    capacityPercentage: 55,
+  },
+  {
+    id: 2,
+    name: "David Wilson",
+    role: "Frontend Dev",
+    avatar: "https://i.pravatar.cc/300?img=8",
+    assignedPercentage: 89,
+    capacityPercentage: 95,
+  },
+  {
+    id: 3,
+    name: "Michael Brown",
+    role: "Backend Dev",
+    avatar: "https://i.pravatar.cc/300?img=9",
+    assignedPercentage: 45,
+    capacityPercentage: 60,
+  },
+  {
+    id: 4,
+    name: "Sarah Davis",
+    role: "Project Manager",
+    avatar: "https://i.pravatar.cc/300?img=16",
+    assignedPercentage: 30,
+    capacityPercentage: 75,
+  },
+];
 
 function ResourceAllocation() {
   const { isDarkMode } = useTheme();
   const dispatch = useDispatch();
-  const [resources, setResources] = useState([
-    {
-      id: 1,
-      name: "Emily Johnson",
-      role: "UX Designer",
-      avatar: "/avatars/emily.jpg",
-      assignedPercentage: 34,
-      capacityPercentage: 55,
-    },
-    {
-      id: 2,
-      name: "David Wilson",
-      role: "Frontend Dev",
-      avatar: "/avatars/david.jpg",
-      assignedPercentage: 89,
-      capacityPercentage: 95,
-    },
-    {
-      id: 3,
-      name: "Michael Brown",
-      role: "Backend Dev",
-      avatar: "/avatars/michael.jpg",
-      assignedPercentage: 45,
-      capacityPercentage: 60,
-    },
-    {
-      id: 4,
-      name: "Sarah Davis",
-      role: "Project Manager",
-      avatar: "/avatars/sarah.jpg",
-      assignedPercentage: 30,
-      capacityPercentage: 75,
-    },
-  ]);
-  const updateResourcePercentages = () => {
-    setResources((prev) =>
-      prev.map((r) => ({
-        ...r,
-        assignedPercentage: Math.min(
-          100,
-          Math.max(10, r.assignedPercentage + (Math.random() * 10 - 5))
-        ),
-        capacityPercentage: Math.min(
-          100,
-          Math.max(50, r.capacityPercentage + (Math.random() * 5 - 2))
-        ),
-      }))
-    );
-  };
+
+  const reduxResources = useSelector((state) => state.dashboard.resources);
+  const resources =
+    reduxResources?.length > 0 ? reduxResources : dummyResources;
+
+  // Optional: Update logic (disabled or dummy simulation for now)
   useEffect(() => {
     const interval = setInterval(() => {
-      dispatch(updateResourcePercentages());
-    }, 5000); // Update every 5 seconds
-    return () => clearInterval(interval);
-  }, [dispatch]);
+      // Example: Dispatch some random updates only if reduxResources exist
+      if (reduxResources?.length > 0) {
+        const updated = reduxResources.map((r) => ({
+          ...r,
+          assignedPercentage: Math.min(
+            100,
+            Math.max(10, r.assignedPercentage + (Math.random() * 10 - 5))
+          ),
+          capacityPercentage: Math.min(
+            100,
+            Math.max(50, r.capacityPercentage + (Math.random() * 5 - 2))
+          ),
+        }));
+        dispatch(setResources(updated));
+      }
+    }, 5000);
 
-  // Role colors adjusted for better visibility in dark mode
+    return () => clearInterval(interval);
+  }, [reduxResources, dispatch]);
+
   const roleColorMap = {
     "UX Designer": {
       light: "bg-blue-500",
@@ -95,27 +102,10 @@ function ResourceAllocation() {
         >
           Resource Allocation
         </h2>
-
-        <button
-          className={`p-2 rounded-md text-sm transition-colors ${
-            isDarkMode
-              ? "bg-gray-700 text-gray-300 hover:bg-gray-600"
-              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-          }`}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-          </svg>
-        </button>
       </div>
 
       <div className="space-y-5">
-        {resources?.map((resource) => (
+        {resources.map((resource) => (
           <div key={resource.id} className="flex items-center space-x-4">
             <div
               className={`w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border-2 ${
@@ -187,8 +177,6 @@ function ResourceAllocation() {
                   style={{ width: `${resource.assignedPercentage}%` }}
                 ></div>
               </div>
-
-              {/* Overallocation warning if applicable */}
               {resource.assignedPercentage > resource.capacityPercentage && (
                 <div
                   className={`mt-1 text-xs ${
@@ -206,8 +194,7 @@ function ResourceAllocation() {
           </div>
         ))}
 
-        {/* Fallback for empty resources */}
-        {(!resources || resources.length === 0) && (
+        {resources.length === 0 && (
           <div
             className={`py-8 text-center ${
               isDarkMode ? "text-gray-400" : "text-gray-500"

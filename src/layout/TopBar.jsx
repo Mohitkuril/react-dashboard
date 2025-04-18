@@ -1,9 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useTheme } from "../context/ThemeContext";
 
 const TopBar = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const { isDarkMode, toggleTheme } = useTheme();
+  const reduxTeamName = useSelector((state) => state.team.teamName);
+  const [teamName, setTeamName] = useState("");
+
+  // 2️⃣ Use effect to set the name (fallback to sessionStorage)
+  useEffect(() => {
+    if (reduxTeamName) {
+      setTeamName(reduxTeamName);
+    } else {
+      const storedName = sessionStorage.getItem("teamName");
+      if (storedName) {
+        setTeamName(storedName);
+      }
+    }
+  }, [reduxTeamName]);
 
   const toggleMobileMenu = () => {
     setShowMobileMenu(!showMobileMenu);
@@ -212,7 +227,7 @@ const TopBar = () => {
                       isDarkMode ? "text-gray-200" : "text-gray-700"
                     }`}
                   >
-                    John Doe
+                    {teamName ? `Team: ${teamName}` : "Admin"}
                   </span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

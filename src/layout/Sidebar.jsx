@@ -1,6 +1,5 @@
 // src/components/Sidebar.jsx
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useTheme } from "../context/ThemeContext";
 import { useProject } from "../context/ProjectContext";
 
@@ -11,22 +10,6 @@ const Sidebar = () => {
   const [activeItem, setActiveItem] = useState("dashboard");
 
   // 🔥 Get teamName from Redux
-  const reduxTeamName = useSelector((state) => state.team.teamName);
-
-  // 💾 Store final team name here
-  const [teamName, setTeamName] = useState("");
-
-  // 🧠 Check Redux first, then sessionStorage
-  useEffect(() => {
-    if (reduxTeamName) {
-      setTeamName(reduxTeamName);
-    } else {
-      const storedName = sessionStorage.getItem("teamName");
-      if (storedName) {
-        setTeamName(storedName);
-      }
-    }
-  }, [reduxTeamName]);
 
   const handleNavClick = (id) => {
     setActiveItem(id);
@@ -85,17 +68,6 @@ const Sidebar = () => {
           </div>
 
           {/* Team Name at the bottom */}
-          {teamName && (
-            <div
-              className={`px-4 py-4 text-sm font-medium  ${
-                isDarkMode
-                  ? "bg-gray-800 text-gray-300 opacity-80"
-                  : "bg-gray-200 text-gray-600 opacity-80"
-              }`}
-            >
-              <span>Team: {teamName}</span>
-            </div>
-          )}
         </div>
       </div>
     </div>

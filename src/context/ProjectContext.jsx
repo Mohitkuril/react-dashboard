@@ -19,14 +19,14 @@ export const ProjectProvider = ({ children }) => {
       {
         id: 1,
         member: "Alice",
-        title: "On Leave",
-        days: [3, 4, 5],
+        title: "Available",
+        days: [3, 4, 9],
         color: "#60a5fa",
       },
       {
         id: 2,
         member: "Bob",
-        title: "Remote Work",
+        title: "Busy",
         days: [10, 11],
         color: "#f472b6",
       },

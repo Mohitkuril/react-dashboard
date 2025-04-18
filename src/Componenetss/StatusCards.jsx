@@ -4,6 +4,8 @@ import { useTheme } from "../context/ThemeContext";
 function StatusCards() {
   const { isDarkMode } = useTheme();
 
+  const teamSize = useSelector((state) => state.dashboard.teamSize);
+
   // Dummy fallback data (declared inside component as requested)
   const fallback = {
     completedTasks: { done: 24, total: 40 },
@@ -18,7 +20,6 @@ function StatusCards() {
     teamMembers = fallback.teamMembers,
     budget = fallback.budget,
   } = useSelector((state) => state.dashboard);
-  console.log(teamMembers);
 
   // Use fallback only if completedTasks.total is not a valid number
   const hasRealData = completedTasks?.total > 0;
@@ -91,9 +92,11 @@ function StatusCards() {
           </span>
         </div>
         <div className="mt-5">
-          <div className="text-2xl font-bold">{data.teamMembers.length}</div>
+          <div className="text-2xl font-bold">
+            {teamSize || fallback.teamMembers.length}
+          </div>
           <div className="mt-3 flex -space-x-2">
-            {data.teamMembers.slice(0, 3).map((_, index) => (
+            {new Array(Math.min(teamSize || 3, 3)).fill(0).map((_, index) => (
               <div
                 key={index}
                 className={`w-8 h-8 rounded-full ${
@@ -103,7 +106,7 @@ function StatusCards() {
                 } border-2`}
               ></div>
             ))}
-            {data.teamMembers.length > 3 && (
+            {(teamSize || fallback.teamMembers.length) > 3 && (
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-xs ${
                   isDarkMode
@@ -111,10 +114,11 @@ function StatusCards() {
                     : "bg-gray-600 border-white text-white"
                 } border-2`}
               >
-                +{data.teamMembers.length - 3}
+                +{(teamSize || fallback.teamMembers.length) - 3}
               </div>
             )}
           </div>
+
           <div
             className={`mt-3 text-sm ${
               isDarkMode ? "text-green-400" : "text-green-600"
