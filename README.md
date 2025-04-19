@@ -8,10 +8,8 @@ A responsive and intelligent **frontend-only** dashboard built with **React**, *
 
 - ✅ Dynamic Team Creation & Resource Management
 - 🔄 Real-time Drag-and-Drop Task Board
-- 🔗 Circular Task Dependency Detection
 - 📈 Burndown Chart with Auto-Generated Progress
 - 🧮 Resource Load Visualization
-- 🗓️ Monthly Availability Calendar with Month Switcher
 - 🌓 Global Dark Mode Toggle via React Context
 - 🧩 Round-Robin Component Architecture
 
@@ -22,8 +20,8 @@ A responsive and intelligent **frontend-only** dashboard built with **React**, *
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/project-management-dashboard.git
-cd project-management-dashboard
+git clone https://github.com/Mohitkuril/react-dashboard.git
+cd react-dashboard
 ```
 
 ### 2. Install Dependencies
@@ -47,39 +45,44 @@ Visit `http://localhost:5173` to view the dashboard.
 ## 🏗️ Architecture
 
 ```
-src/
-│
-├── components/                # Reusable UI components
-│   ├── StatusCards.jsx
-│   ├── BurndownChart.jsx
-│   ├── DraggableTaskBoard.jsx
-│   ├── ResourceAllocation.jsx
+src
+├── assets
+├── components
 │   ├── AvailabilityCalendar.jsx
-│   ├── CreateTeamForm.jsx
-│   ├── TeamMembersForm.jsx
+│   ├── Dashboard.jsx
+│   ├── DraggableTaskBoard.jsx
+│   ├── NotFoundPage.jsx
+│   ├── StatusCards.jsx
+│   ├── TaskBoard.jsx
+│   ├── charts
+│   │   ├── BurndownChart.jsx
+│   │   ├── GanttChart.jsx
+│   │   └── ResourceAllocation.jsx
+│   ├── forms
+│   │   ├── CreateTeamForm.jsx
+│   │   ├── TaskForm.jsx
+│   │   └── TeamMembersForm.jsx
+│   └── hooks
+│       └── useDataProvider.jsx
+├── context
+│   ├── ProjectContext.jsx
+│   ├── TeamContext.jsx
+│   └── ThemeContext.jsx
+├── layout
+│   ├── DashboardLayout.jsx
+│   ├── FormLayout.jsx
+│   ├── Header.jsx
+│   ├── Layout.jsx
 │   ├── Sidebar.jsx
 │   └── TopBar.jsx
-│
-├── context/
-│   └── ThemeContext.jsx       # Handles global dark/light mode
-│
-├── store/
-│   ├── store.js
-│   └── teamSlice.js
-│       ├── dashboardSlice.js
-│       ├── taskSlice.js
-│
-│
-├── pages/
-│   ├── Home.jsx
-│   └── Dashboard.jsx
-│
-├── utils/
-│   └── dummyData.js           # Default fallback data
-│
-├── App.jsx
-└── main.jsx                   # App entry point
-```
+└── store
+    ├── dashboardSlice.js
+    ├── store.js
+    ├── taskBoardSlice.js
+    ├── taskSlice.js
+    ├── teamMembersSlice.js
+    └── teamSlice.js
+
 
 ---
 
@@ -114,3 +117,4 @@ src/
 - 🗂️ Coordinated layout with a sidebar, header, and responsive main content.
 
 ---
+```
