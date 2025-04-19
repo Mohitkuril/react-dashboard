@@ -25,14 +25,12 @@ export default function TeamMembersForm() {
   const navigate = useNavigate();
   const { isDarkMode } = useTheme();
 
-  // Get state from Redux store
   const members = useSelector((state) => state.dashboard.formMembers);
   const burndown = useSelector((state) => state.dashboard.formBurndown);
   const isFormSubmitted = useSelector(
     (state) => state.dashboard.isFormSubmitted
   );
 
-  // If the form was previously submitted and we're returning to it, check if we need to navigate back to dashboard
   useEffect(() => {
     if (isFormSubmitted) {
       navigate("/dashboard");
@@ -107,7 +105,6 @@ export default function TeamMembersForm() {
       resources.length > 0 && resources[0].name ? resources : [];
     const finalTasks = tasks.length > 0 && tasks[0].title ? tasks : [];
 
-    // ✅ Save team size
     dispatch(setTeamSize(finalResources.length));
 
     dispatch(setResources(finalResources));
