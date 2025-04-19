@@ -1,12 +1,27 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useTheme } from "../context/ThemeContext";
+import { useProject } from "../context/ProjectContext";
 
 const TopBar = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const { isDarkMode, toggleTheme } = useTheme();
   const reduxTeamName = useSelector((state) => state.team.teamName);
   const [teamName, setTeamName] = useState("");
+  const { navigation } = useProject(); // ⬅️ Pull in navigation
+  const [activeItem, setActiveItem] = useState("dashboard");
+
+  const handleNavClick = (id) => {
+    setActiveItem(id);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+    setShowMobileMenu(false); // close menu after selection
+  };
 
   // 2️⃣ Use effect to set the name (fallback to sessionStorage)
   useEffect(() => {
@@ -62,50 +77,6 @@ const TopBar = () => {
             </svg>
           </button>
 
-          {/* Desktop Navigation */}
-          {/* <nav className="hidden md:flex space-x-4">
-            <a
-              href="#"
-              className={`px-3 py-2 rounded-md text-sm font-medium ${
-                isDarkMode
-                  ? "text-white bg-gray-800"
-                  : "text-gray-900 bg-gray-100"
-              }`}
-            >
-              Dashboard
-            </a>
-            <a
-              href="#"
-              className={`px-3 py-2 rounded-md text-sm font-medium ${
-                isDarkMode
-                  ? "text-gray-300 hover:bg-gray-700 hover:text-white"
-                  : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-              }`}
-            >
-              Projects
-            </a>
-            <a
-              href="#"
-              className={`px-3 py-2 rounded-md text-sm font-medium ${
-                isDarkMode
-                  ? "text-gray-300 hover:bg-gray-700 hover:text-white"
-                  : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-              }`}
-            >
-              Tasks
-            </a>
-            <a
-              href="#"
-              className={`px-3 py-2 rounded-md text-sm font-medium ${
-                isDarkMode
-                  ? "text-gray-300 hover:bg-gray-700 hover:text-white"
-                  : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-              }`}
-            >
-              Calendar
-            </a>
-          </nav> */}
-
           {/* Search bar */}
           <div className="hidden md:flex flex-1 px-2 mx-6">
             <div className="w-full max-w-lg relative">
@@ -141,7 +112,7 @@ const TopBar = () => {
           <div className="flex items-center space-x-4">
             {/* Notifications */}
             <button
-              className={`relative p-1 rounded-full ${
+              className={` cursor-pointer relative p-1 rounded-full ${
                 isDarkMode
                   ? "text-gray-400 hover:text-white"
                   : "text-gray-500 hover:text-gray-700"
@@ -168,7 +139,7 @@ const TopBar = () => {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className={`p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors ${
+              className={`p-2 rounded-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors ${
                 isDarkMode
                   ? "bg-gray-800 text-yellow-300 hover:bg-gray-700"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
@@ -207,7 +178,7 @@ const TopBar = () => {
               <div>
                 <button
                   type="button"
-                  className={`flex items-center space-x-3 rounded-full ${
+                  className={`flex items-center cursor-pointer space-x-3 rounded-full ${
                     isDarkMode
                       ? "bg-gray-800 hover:bg-gray-700"
                       : "bg-gray-50 hover:bg-gray-100"
@@ -253,83 +224,28 @@ const TopBar = () => {
       {/* Mobile menu, show/hide based on menu state */}
       {showMobileMenu && (
         <div
-          className={`md:hidden transition-all duration-300 ${
-            isDarkMode ? "bg-gray-900" : "bg-white"
+          className={`md:hidden px-4 pb-4 pt-2 space-y-1 ${
+            isDarkMode ? "bg-gray-900 text-gray-100" : "bg-white text-gray-800"
           }`}
         >
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a
-              href="#"
-              className={`block px-3 py-2 rounded-md text-base font-medium ${
-                isDarkMode
-                  ? "text-white bg-gray-800"
-                  : "text-gray-900 bg-gray-100"
+          {navigation.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => handleNavClick(item.id)}
+              className={`w-full text-left flex items-center px-4 py-2 rounded-md text-sm font-medium transition ${
+                activeItem === item.id
+                  ? isDarkMode
+                    ? "bg-blue-900 text-blue-400"
+                    : "bg-blue-100 text-blue-600"
+                  : isDarkMode
+                  ? "hover:bg-gray-800 text-gray-300"
+                  : "hover:bg-gray-100 text-gray-700"
               }`}
             >
-              Dashboard
-            </a>
-            <a
-              href="#"
-              className={`block px-3 py-2 rounded-md text-base font-medium ${
-                isDarkMode
-                  ? "text-gray-300 hover:bg-gray-700 hover:text-white"
-                  : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-              }`}
-            >
-              Projects
-            </a>
-            <a
-              href="#"
-              className={`block px-3 py-2 rounded-md text-base font-medium ${
-                isDarkMode
-                  ? "text-gray-300 hover:bg-gray-700 hover:text-white"
-                  : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-              }`}
-            >
-              Tasks
-            </a>
-            <a
-              href="#"
-              className={`block px-3 py-2 rounded-md text-base font-medium ${
-                isDarkMode
-                  ? "text-gray-300 hover:bg-gray-700 hover:text-white"
-                  : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-              }`}
-            >
-              Calendar
-            </a>
-          </div>
-
-          {/* Mobile search */}
-          <div className="pt-2 pb-3 px-4">
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <svg
-                  className={`h-5 w-5 ${
-                    isDarkMode ? "text-gray-400" : "text-gray-500"
-                  }`}
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <input
-                type="text"
-                placeholder="Search"
-                className={`block w-full pl-10 pr-3 py-2 rounded-lg text-sm ${
-                  isDarkMode
-                    ? "bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500"
-                    : "bg-gray-100 border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-blue-600 focus:border-blue-600"
-                } border focus:outline-none transition-colors duration-200`}
-              />
-            </div>
-          </div>
+              <i className={`${item.icon} mr-3 text-lg`}></i>
+              {item.title}
+            </button>
+          ))}
         </div>
       )}
     </header>

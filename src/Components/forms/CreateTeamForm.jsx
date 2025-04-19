@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import { addTeamMember, setTeamName } from "../store/teamSlice"; // ✅ import setTeamName
-import FormLayout from "../layout/FormLayout";
-import { useTheme } from "../context/ThemeContext";
+import { addTeamMember, setTeamName } from "../../store/teamSlice"; // ✅ import setTeamName
+import FormLayout from "../../layout/FormLayout";
+import { useTheme } from "../../context/ThemeContext";
 
 const CreateTeamForm = () => {
   const [name, setName] = useState("");

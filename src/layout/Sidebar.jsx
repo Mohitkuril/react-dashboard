@@ -32,6 +32,18 @@ const Sidebar = () => {
               : "bg-white text-gray-800 border-gray-200"
           }`}
         >
+          <div className="flex items-center p-4">
+            <div
+              className={`flex-shrink-0 flex items-center ${
+                isDarkMode ? "text-blue-400" : "text-blue-600"
+              }`}
+            >
+              <svg className="h-8 w-8" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+              </svg>
+              <span className="ml-2 text-lg font-semibold">Dashboard</span>
+            </div>
+          </div>
           {/* Navigation Links */}
           <div className="flex-1 flex flex-col overflow-y-auto">
             <nav className="flex-1 px-2 py-4 space-y-1">

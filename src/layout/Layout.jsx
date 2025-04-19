@@ -2,7 +2,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
-import Header from "../Componenetss/Header";
+import Header from "./Header";
 
 const Layout = () => {
   const { isDarkMode, toggleTheme } = useTheme(); // Use the theme context

@@ -8,14 +8,15 @@ import "./index.css";
 // Context
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
 import { TeamProvider } from "./context/TeamContext";
+import NotFoundPage from "./Components/NotFoundPage";
 
 // Lazy-loaded pages
-const CreateTeamForm = lazy(() => import("./Componenetss/CreateTeamForm"));
-const TeamMembersForm = lazy(() => import("./Componenetss/TeamMembersForm"));
-const TaskAssignmentForm = lazy(() =>
-  import("./Componenetss/forms/TaskAssignmentForm")
+const CreateTeamForm = lazy(() => import("./Components/forms/CreateTeamForm"));
+const TeamMembersForm = lazy(() =>
+  import("./Components/forms/TeamMembersForm")
 );
-const Dashboard = lazy(() => import("./Componenetss/Dashboard"));
+
+const Dashboard = lazy(() => import("./Components/Dashboard"));
 
 // Optional fallback loader
 const FallbackLoader = () => {
@@ -67,6 +68,7 @@ function App() {
                     </DashboardLayout>
                   }
                 />
+                <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </Suspense>
           </Router>

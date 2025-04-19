@@ -120,7 +120,7 @@ function StatusCards() {
           </div>
 
           <div
-            className={`mt-3 text-sm ${
+            className={`mt-3 text-sm cursor-pointer ${
               isDarkMode ? "text-green-400" : "text-green-600"
             }`}
           >
@@ -238,7 +238,7 @@ function Card({
             ></div>
           </div>
         )}
-        <div className="mt-3 flex justify-between text-sm">
+        <div className="mt-3 flex cursor-pointer justify-between text-sm">
           <span
             className={`${
               isDarkMode ? `text-${color}-400` : `text-${color}-600`

@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { nanoid } from "nanoid";
-import { useTheme } from "../context/ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
 import {
   setResources,
   setDashboardStats,
@@ -19,7 +19,7 @@ import {
   resetFormToDefault,
   setFormSubmitted,
   setTeamSize,
-} from "../store/dashboardSlice";
+} from "../../store/dashboardSlice";
 
 export default function TeamMembersForm() {
   const dispatch = useDispatch();

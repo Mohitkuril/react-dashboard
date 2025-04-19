@@ -10,7 +10,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { useTheme } from "../context/ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
 
 const BurndownChart = () => {
   const { isDarkMode } = useTheme();
@@ -113,7 +113,7 @@ const BurndownChart = () => {
           Burndown Chart
         </h3>
         <select
-          className={`py-1 px-3 text-sm rounded-md focus:ring-2 focus:ring-offset-2 focus:outline-none ${
+          className={`py-1 cursor-pointer px-3 text-sm rounded-md focus:ring-2 focus:ring-offset-2 focus:outline-none ${
             isDarkMode
               ? "bg-gray-700 border-gray-600 text-gray-200 focus:ring-blue-500"
               : "bg-white border-gray-300 text-gray-700 focus:ring-blue-500"

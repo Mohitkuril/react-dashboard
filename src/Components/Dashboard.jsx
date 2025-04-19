@@ -2,13 +2,11 @@
 import React from "react";
 import { useTheme } from "../context/ThemeContext";
 import { useProject } from "../context/ProjectContext";
-import TaskBoard from "./TaskBoard";
-import TaskForm from "./TaskForm";
 import StatusCards from "./StatusCards";
-import BurndownChart from "./BurndownChart";
-import ResourceAllocation from "./ResourceAllocation";
+import BurndownChart from "./charts/BurndownChart";
+import ResourceAllocation from "./charts/ResourceAllocation";
 import DraggableTaskBoard from "./DraggableTaskBoard";
-import GanttChart from "./GanttChart";
+import GanttChart from "./charts/GanttChart";
 import AvailabilityCalendar from "./AvailabilityCalendar";
 
 const Dashboard = () => {

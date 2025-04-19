@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useTheme } from "../context/ThemeContext";
-import { setResources } from "../store/dashboardSlice"; // import action if needed
+import { useTheme } from "../../context/ThemeContext";
+import { setResources } from "../../store/dashboardSlice"; // import action if needed
 
 const dummyResources = [
   {

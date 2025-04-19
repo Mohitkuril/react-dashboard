@@ -286,7 +286,7 @@ const DraggableTaskBoard = () => {
           </h3>
           <button
             onClick={() => setShowDependencies(!showDependencies)}
-            className="text-sm text-blue-500 hover:text-blue-600"
+            className="text-sm cursor-pointer text-blue-500 hover:text-blue-600"
           >
             Toggle Dependencies
           </button>

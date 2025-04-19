@@ -1,7 +1,7 @@
 // src/components/GanttChart.jsx
 import { useState, useEffect } from "react";
-import { useProject } from "../context/ProjectContext";
-import { useTheme } from "../context/ThemeContext";
+import { useProject } from "../../context/ProjectContext";
+import { useTheme } from "../../context/ThemeContext";
 
 const GanttChart = () => {
   const { isDarkMode } = useTheme();
@@ -51,7 +51,7 @@ const GanttChart = () => {
       >
         <div className="flex justify-between items-center">
           <h3
-            className={`text-lg leading-6 font-medium ${
+            className={`text-lg  leading-6 font-medium ${
               isDarkMode ? "text-gray-100" : "text-gray-900"
             }`}
           >
@@ -60,7 +60,7 @@ const GanttChart = () => {
           <div className="flex space-x-2">
             <button
               type="button"
-              className={`inline-flex items-center px-3 py-1 border text-sm font-medium rounded-md ${
+              className={`inline-flex cursor-pointer items-center px-3 py-1 border text-sm font-medium rounded-md ${
                 isDarkMode
                   ? "border-gray-600 text-gray-300 bg-gray-700 hover:bg-gray-600"
                   : "border-gray-300 text-gray-700 bg-white hover:bg-gray-50"
@@ -72,7 +72,7 @@ const GanttChart = () => {
             </button>
             <button
               type="button"
-              className={`inline-flex items-center px-3 py-1 border text-sm font-medium rounded-md ${
+              className={`inline-flex cursor-pointer items-center px-3 py-1 border text-sm font-medium rounded-md ${
                 isDarkMode
                   ? "border-gray-600 text-gray-300 bg-gray-700 hover:bg-gray-600"
                   : "border-gray-300 text-gray-700 bg-white hover:bg-gray-50"
