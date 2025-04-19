@@ -59,7 +59,6 @@ const BurndownChart = () => {
       )
     : 0;
 
-  // Colors for dark and light mode
   const colors = {
     idealStroke: isDarkMode ? "#9CA3AF" : "#D1D5DB",
     idealFill: isDarkMode ? "rgba(75, 85, 99, 0.3)" : "#F3F4F6",
@@ -70,7 +69,6 @@ const BurndownChart = () => {
     tooltipText: isDarkMode ? "#F3F4F6" : "#111827",
   };
 
-  // Custom tooltip component with dark mode support
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (

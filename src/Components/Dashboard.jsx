@@ -1,4 +1,3 @@
-// src/components/Dashboard.jsx
 import React from "react";
 import { useTheme } from "../context/ThemeContext";
 import { useProject } from "../context/ProjectContext";

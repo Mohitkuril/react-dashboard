@@ -1,16 +1,13 @@
-// src/App.jsx
 import React, { lazy, Suspense, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Layout from "./layout/Layout";
 import DashboardLayout from "./layout/DashboardLayout";
 import "./index.css";
 
-// Context
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
 import { TeamProvider } from "./context/TeamContext";
 import NotFoundPage from "./Components/NotFoundPage";
 
-// Lazy-loaded pages
 const CreateTeamForm = lazy(() => import("./Components/forms/CreateTeamForm"));
 const TeamMembersForm = lazy(() =>
   import("./Components/forms/TeamMembersForm")
@@ -18,7 +15,6 @@ const TeamMembersForm = lazy(() =>
 
 const Dashboard = lazy(() => import("./Components/Dashboard"));
 
-// Optional fallback loader
 const FallbackLoader = () => {
   const { isDarkMode } = useTheme();
   return (

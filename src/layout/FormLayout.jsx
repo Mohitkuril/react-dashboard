@@ -8,7 +8,7 @@ export default function FormLayout({
   buttonLabel,
   onSubmit,
 }) {
-  const { isDarkMode } = useTheme(); // Fetch isDarkMode from context
+  const { isDarkMode } = useTheme();
 
   return (
     <div

@@ -18,11 +18,8 @@ const CreateTeamForm = () => {
     if (skipToDashboard) {
       navigate("/dashboard");
     } else if (name) {
-      // ✅ Save to Redux
       dispatch(setTeamName(name));
       dispatch(addTeamMember({ id: Date.now(), name }));
-
-      // ✅ Save to sessionStorage
       sessionStorage.setItem("teamName", name);
 
       setName("");

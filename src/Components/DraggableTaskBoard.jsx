@@ -7,7 +7,6 @@ import {
   fixCircularDependency,
 } from "../store/taskBoardSlice";
 
-// Detect circular dependencies in task relationships
 const detectCircularDependencies = (
   taskId,
   dependencyMap,
@@ -42,7 +41,6 @@ const detectCircularDependencies = (
   return { detected: false };
 };
 
-// Task card with drag and drop support
 const TaskCard = ({ task, onDragStart, dependencyMap, showDependencies }) => {
   const { isDarkMode } = useTheme();
   const [showDetails, setShowDetails] = useState(false);

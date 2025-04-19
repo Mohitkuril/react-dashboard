@@ -1,4 +1,3 @@
-// src/components/Sidebar.jsx
 import { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { useProject } from "../context/ProjectContext";
@@ -78,8 +77,6 @@ const Sidebar = () => {
               ))}
             </nav>
           </div>
-
-          {/* Team Name at the bottom */}
         </div>
       </div>
     </div>

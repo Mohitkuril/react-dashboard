@@ -1,4 +1,3 @@
-// src/layouts/Layout.jsx
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
@@ -17,7 +16,7 @@ const Layout = () => {
     >
       <Header toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
       <main className="">
-        <Outlet /> {/* Render page components */}
+        <Outlet />
       </main>
     </div>
   );

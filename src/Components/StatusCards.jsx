@@ -6,7 +6,6 @@ function StatusCards() {
 
   const teamSize = useSelector((state) => state.dashboard.teamSize);
 
-  // Dummy fallback data (declared inside component as requested)
   const fallback = {
     completedTasks: { done: 24, total: 40 },
     hoursSpent: { total: 148, thisWeek: 32 },
@@ -21,7 +20,6 @@ function StatusCards() {
     budget = fallback.budget,
   } = useSelector((state) => state.dashboard);
 
-  // Use fallback only if completedTasks.total is not a valid number
   const hasRealData = completedTasks?.total > 0;
 
   const data = hasRealData
@@ -30,7 +28,6 @@ function StatusCards() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {/* Completed Tasks */}
       <Card
         title="Completed Tasks"
         icon="check"
@@ -58,7 +55,6 @@ function StatusCards() {
         showProgress={false}
       />
 
-      {/* Team Members */}
       <div
         className={`p-5 rounded-xl shadow-md transition-colors duration-300 ${
           isDarkMode ? "bg-gray-800 text-gray-100" : "bg-white text-gray-800"

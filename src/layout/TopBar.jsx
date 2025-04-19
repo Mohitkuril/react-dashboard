@@ -20,10 +20,9 @@ const TopBar = () => {
         block: "start",
       });
     }
-    setShowMobileMenu(false); // close menu after selection
+    setShowMobileMenu(false);
   };
 
-  // 2️⃣ Use effect to set the name (fallback to sessionStorage)
   useEffect(() => {
     if (reduxTeamName) {
       setTeamName(reduxTeamName);

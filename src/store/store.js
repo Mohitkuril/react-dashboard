@@ -1,4 +1,3 @@
-// src/store/index.js
 import { configureStore } from "@reduxjs/toolkit";
 import teamReducer from "./teamSlice";
 import taskReducer from "./taskSlice"; // Import the task slice

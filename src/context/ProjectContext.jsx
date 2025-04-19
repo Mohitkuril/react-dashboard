@@ -1,4 +1,3 @@
-// contexts/ProjectContext.jsx
 import { createContext, useContext, useState } from "react";
 import dayjs from "dayjs";
 
@@ -54,7 +53,7 @@ export const ProjectProvider = ({ children }) => {
       duration: 7,
       color: "#2196F3",
     },
-  ]); // Example data, replace with your actual data source
+  ]);
 
   const navigation = [
     { id: "dashboard", title: "Dashboard", icon: "ri-dashboard-line" },

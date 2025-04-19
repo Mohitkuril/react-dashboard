@@ -1,4 +1,3 @@
-// src/components/GanttChart.jsx
 import { useState, useEffect } from "react";
 import { useProject } from "../../context/ProjectContext";
 import { useTheme } from "../../context/ThemeContext";
@@ -8,33 +7,26 @@ const GanttChart = () => {
   const { ganttChart } = useProject();
   const [filterOpen, setFilterOpen] = useState(false);
 
-  // Calculate current date and month
   const currentDate = new Date();
   const currentMonth = currentDate.toLocaleString("default", { month: "long" });
   const currentDay = currentDate.getDate();
 
-  // Start Date: Current date
   const startDate = currentDate;
 
-  // End Date: Same day next month
   const endDate = new Date(currentDate);
   endDate.setMonth(currentDate.getMonth() + 1); // Move one month forward
 
-  // Display Month and Year dynamically
   const startMonthYear = `${currentMonth} ${currentDate.getFullYear()}`;
   const endMonthYear = `${endDate.toLocaleString("default", {
     month: "long",
   })} ${endDate.getFullYear()}`;
 
-  // Weeks in the timeline
   const weeks = ["Week 1", "Week 2", "Week 3", "Week 4"];
   const weekWidth = 100 / weeks.length;
 
-  // Total days in our chart (28 days / 4 weeks)
   const totalDays = 28;
   const dayWidth = 100 / totalDays;
 
-  // Calculate current week based on start date and current date
   const daysSinceStart = Math.floor(
     (currentDate - startDate) / (1000 * 3600 * 24)
   );
@@ -85,7 +77,6 @@ const GanttChart = () => {
         </div>
       </div>
 
-      {/* Main Gantt Chart Layout */}
       <div className="px-2 py-4 overflow-x-auto">
         <div className="inline-block min-w-full">
           <div
@@ -95,7 +86,6 @@ const GanttChart = () => {
                 : "border-b border-gray-200"
             }`}
           >
-            {/* Task Names Column */}
             <div className="w-60 flex-shrink-0 pr-4">
               <div className="h-8 flex items-center justify-start px-2">
                 <span
@@ -108,7 +98,6 @@ const GanttChart = () => {
               </div>
             </div>
 
-            {/* Weeks Column */}
             <div className="flex flex-1">
               <div className="flex" style={{ minWidth: "840px" }}>
                 {weeks.map((week, index) => (
@@ -146,7 +135,6 @@ const GanttChart = () => {
             </div>
           </div>
 
-          {/* Gantt Tasks */}
           <div>
             {ganttChart.map((task) => (
               <div

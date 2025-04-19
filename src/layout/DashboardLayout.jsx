@@ -12,7 +12,6 @@ const DashboardLayout = ({ children }) => {
     setShowMobileSidebar(!showMobileSidebar);
   };
 
-  // Close sidebar when clicking outside on mobile
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (
@@ -30,7 +29,6 @@ const DashboardLayout = ({ children }) => {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Mobile sidebar */}
       {showMobileSidebar && (
         <div className="fixed inset-0 z-40 md:hidden">
           <div className="absolute inset-0 bg-gray-600 bg-opacity-75"></div>
@@ -40,15 +38,9 @@ const DashboardLayout = ({ children }) => {
         </div>
       )}
 
-      {/* Regular sidebar (hidden on mobile) */}
       <Sidebar />
-
-      {/* Main Content Area */}
       <div className="flex flex-col w-0 flex-1 overflow-hidden">
-        {/* Pass toggleMobileSidebar to TopBar */}
         <TopBar toggleSidebar={toggleMobileSidebar} />
-
-        {/* Main Content */}
         <main
           className={`flex-1 relative overflow-y-auto focus:outline-none bg-gray-50 p-6 ${
             isDarkMode ? "dark:bg-gray-900 scrollbar-dark" : "scrollbar-light"

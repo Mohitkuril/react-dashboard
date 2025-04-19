@@ -1,4 +1,3 @@
-// src/store/dashboardSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
 
@@ -88,9 +87,7 @@ const dummyData = {
   ],
 };
 
-// Initial state with dashboard data and form data in one slice
 const initialState = {
-  // Dashboard data
   teamSize: 0,
   resources: [],
   tasks: [],
@@ -98,8 +95,6 @@ const initialState = {
   completedTasks: { done: 0, total: 0 },
   hoursSpent: { total: 0, thisWeek: 0 },
   budget: { spent: 0, total: 0 },
-
-  // Form data (for TeamMembersForm)
   formMembers: [{ ...defaultMember }],
   formBurndown: dummyData.burndown,
   isFormSubmitted: false,
@@ -126,7 +121,6 @@ const dashboardSlice = createSlice({
       state.budget = action.payload.budget;
     },
 
-    // Form reducers
     setFormMembers: (state, action) => {
       state.formMembers = action.payload;
     },
@@ -195,12 +189,9 @@ const dashboardSlice = createSlice({
 });
 
 export const {
-  // Existing dashboard actions
   setResources,
   setTasks,
   setDashboardStats,
-
-  // Form actions
   setFormMembers,
   addFormMember,
   updateFormMember,

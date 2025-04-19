@@ -1,4 +1,3 @@
-// src/store/teamMembersSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 import { nanoid } from "nanoid";
 

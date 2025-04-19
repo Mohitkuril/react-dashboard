@@ -1,4 +1,3 @@
-// src/components/TaskBoard.jsx
 import React from "react";
 
 const TaskBoard = ({ tasks }) => {
